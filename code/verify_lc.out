@@ -1,0 +1,7 @@
+Forward.vertex_rel key 0
+Steps.first_tangent norm 0
+Steps.first_tangent inner 0
+Steps.other_tangent norm 0
+Steps.other_tangent inner 0
+Steps.other_tangent ne 0
+Geometry.fuss_iff_reciprocal 0

@@ -1,0 +1,5 @@
+Fuss holds: max closure error 3.609153881694724e-13
+negative control (r off by 10%): closure gap 3.1267421934168875
+shift identity ok; example R=7,d=1,r=24/5: 2304 2304.0
+general tangency configs found: 294 max rel Fuss defect: 3.5174000950611467e-13
+k=0 example: dist of vertices to O: [2.0, 2.0, 2.0, 2.0] Fuss lhs,rhs: 0 4.0
