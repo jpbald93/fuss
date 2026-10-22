@@ -18,7 +18,7 @@
 export PATH="$HOME/.elan/bin:$PATH"
 cd "$(dirname "$0")" || exit 1
 LIB="Fuss"
-REQUIRED="Fuss.IsBicentric Fuss.chain_distinct Fuss.closes_vec Fuss.eq_or_eq_or_eq_of_inner Fuss.exists_bicentric_of_fuss Fuss.exists_iff_forall Fuss.exists_mem_sphere Fuss.exists_quad_vec Fuss.first_tangent Fuss.fuss_iff_exists Fuss.fuss_iff_forall Fuss.fuss_iff_reciprocal Fuss.fuss_of_isBicentric Fuss.fuss_vec Fuss.inside_of_mem Fuss.isTangent_of_mem_orthRadius Fuss.line_points Fuss.mem_of_vec Fuss.mem_orthRadius_iff Fuss.nonvacuous Fuss.not_three_on_line Fuss.other_tangent Fuss.outside_of_mem Fuss.parallel_of_inner_eq_zero Fuss.poncelet_chain_closes Fuss.second_point Fuss.step Fuss.tangent_points Fuss.vec_of_mem Fuss.vec_of_mem_center Fuss.vertex_denom_ne Fuss.vertex_rel Fuss.vertex_smul Fuss.vertex_unique"
+REQUIRED="Fuss.IsBicentric Fuss.chain_distinct Fuss.closes_vec Fuss.eq_or_eq_or_eq_of_inner Fuss.exists_bicentric_of_fuss Fuss.exists_iff_forall Fuss.exists_mem_sphere Fuss.exists_quad_vec Fuss.first_tangent Fuss.fuss_iff_exists Fuss.fuss_iff_forall Fuss.fuss_iff_reciprocal Fuss.fuss_of_isBicentric Fuss.fuss_vec Fuss.inside_of_mem Fuss.isTangent_of_mem_orthRadius Fuss.line_points Fuss.mem_of_vec Fuss.mem_orthRadius_iff Fuss.nonvacuous Fuss.not_three_on_line Fuss.other_tangent Fuss.outside_of_mem Fuss.parallel_of_inner_eq_zero Fuss.poncelet_chain_closes Fuss.second_point Fuss.step Fuss.tangent_points Fuss.vec_of_mem Fuss.vec_of_mem_center Fuss.vertex_denom_ne Fuss.vertex_rel Fuss.vertex_smul Fuss.vertex_unique Fuss.l14_isBicentric_iff Fuss.l14_fuss Fuss.l14_poncelet_chain_closes Fuss.l14_exists_bicentric Fuss.l14_fuss_iff_exists Fuss.l14_fuss_iff_forall Fuss.l14_exists_iff_forall Fuss.l14_fuss_iff_reciprocal Fuss.l14_dist_eq Fuss.l14_inner Fuss.l14_mem_orthRadius Fuss.l14Γ Fuss.l14ω Fuss.l14_mem_Γ Fuss.l14_mem_ω Fuss.l14_orth_ω Fuss.l14_dist_Γω Fuss.l14_fuss_rel Fuss.l14_inside Fuss.l14A Fuss.l14B Fuss.l14C Fuss.l14D Fuss.l14TAB Fuss.l14TBC Fuss.l14TCD Fuss.l14TDA Fuss.l14_ne Fuss.l14_kite Fuss.l14_kite_ne Fuss.l14_kite_tangent Fuss.l14w_fuss Fuss.l14w_poncelet_chain_closes Fuss.l14w_exists_bicentric Fuss.l14ω' Fuss.l14w_fuss_iff Fuss.l14w_fuss_iff_reciprocal Fuss.Classical.tangentAt_of_side Fuss.Classical.ne_of_not_collinear Fuss.Classical.isBicentric_of_with Fuss.Classical.fuss_of_with Fuss.Classical.fuss_algebra Fuss.Classical.cov_CaseyFuss2_a_part Fuss.Classical.fuss_of_recip Fuss.Classical.cov_CaseyFuss2_b_part Fuss.Classical.cov_CaseyFuss3_b_part Fuss.Classical.tangentAt_of_lineTangent Fuss.Classical.not_collinear_of_mem Fuss.Classical.not_three Fuss.Classical.cov_CaseyFuss3_a_part"
 SOURCES="$(find $LIB -name '*.lean' | sort | tr '\n' ' ') $LIB.lean"
 [ -e .lake/packages/mathlib ] || lake exe cache get || { echo "FAIL: could not fetch Mathlib cache"; exit 1; }
 if grep -nE "\bsorry\b|\badmit\b|native_decide|\baxiom\b|#eval|\brun_cmd\b|\binitialize\b|\bIO\b|\bdebug\.|\bmacro|\belab|\bsyntax\b|\bnotation\b|\binfix|\bprefix\b|\bpostfix\b|import Lean|open Lean|\bset_option\b" $SOURCES; then
@@ -26,7 +26,7 @@ if grep -nE "\bsorry\b|\badmit\b|native_decide|\baxiom\b|#eval|\brun_cmd\b|\bini
 build=$(lake build $LIB 2>&1); bstatus=$?
 printf '%s\n' "$build" | tail -3
 [ "$bstatus" -eq 0 ] || { printf '%s\n' "$build"; echo "FAIL: build"; exit 1; }
-chk=$(mktemp --suffix=.lean -p . .gatecheck_XXXX)
+chk=".gatecheck_$$.lean"
 trap 'rm -f "$chk"' EXIT
 { echo "import $LIB"; for t in $REQUIRED; do echo "#print axioms $t"; done; } > "$chk"
 out=$(lake env lean "$chk" 2>&1); status=$?
